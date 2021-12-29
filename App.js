@@ -2,6 +2,7 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from './android/app/src/pages/login/index';
+
 const Stack = createNativeStackNavigator();
 
 const App = () => {
@@ -9,9 +10,8 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name="Home"
+          name="Login"
           component={Login}
-          options={{ title: 'Welcome' }}
         />
       
       </Stack.Navigator>
