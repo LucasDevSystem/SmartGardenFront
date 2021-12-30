@@ -1,17 +1,13 @@
 const express = require ('express');
-const PostsController=require("./controller/Posts");
-const bp = require('body-parser')
+const AuthController = require("./controller/Auth");
 const router = express.Router();
-
-router.post('/posts/create',PostsController.createPost);
-router.get('/posts',PostsController.getPost)
+//post routes
+router.post('/signup',AuthController.siginup);
+//get routes
+router.get('/sigin',AuthController.getUsers)
 
 router.get('/',(req,res)=>{
     res.send("ola ");
 })
-
-
-
-
 
 module.exports = router

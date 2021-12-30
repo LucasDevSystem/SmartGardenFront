@@ -1,34 +1,30 @@
 const express = require("express");
-const res = require("express/lib/response");
-const app = express();
 const allRouter=require('./routes');
-const mongoose = require ("mongoose");
+const app = express();
 app.use(express.json());
-app.use('/',allRouter);
+app.use('/',allRouter); 
 
 require("dotenv").config();
+const mongoose = require ("mongoose");
 
-
+const MONGOSE_CONFIG = {useNewUrlParser: true, useUnifiedTopology: true };
+const DATABASE_URL = process.env.DATABASE_URL;
+const PORT = 5000
 
 try {
-  
   mongoose.connect(
-    process.env.DATABASE_URL,
-    {useNewUrlParser: true, 
-
-      useUnifiedTopology: true },
-    () => console.log(" Mongoose is connected"),
+    DATABASE_URL,
+    MONGOSE_CONFIG,
+    () => console.log('\u001b[' + 32 + 'm' + 'Mongoose connected : OK' + '\u001b[0m')
   );
 } catch (e) {
-  console.log("could not connect");
+  console.log("conn error");
 }
-
 const dbConnection = mongoose.connection;
+
 dbConnection.on("error", (err) => console.log(`Connection error ${err}`));
-dbConnection.once("open", () => console.log("Connected to DB!"));
+dbConnection.once("open", () =>console.log('\u001b[' + 32 + 'm' + 'Connected to DB: OK' + '\u001b[0m'));
 
-const port = 5000
-
-app.listen(port,()=>{
-    console.log('app inicializado');
+app.listen(PORT,()=>{
+    console.log('initializing');
 })
