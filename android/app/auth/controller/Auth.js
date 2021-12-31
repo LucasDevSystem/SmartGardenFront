@@ -1,5 +1,9 @@
 const User = require('../model/Auth');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const expressjwt = require('express-jwt');
+require('dotenv').config();
+const JWT_SECRET = process.env.JWT_SECRET;
 
 exports.siginup = async (req, res) => {
   try {
@@ -57,9 +61,30 @@ exports.siginup = async (req, res) => {
   }
 };
 
-exports.siginin = async (req, res) => {
+exports.sigin = async (req, res) => {
   try {
     const userName = req.body.userName;
     const password = req.body.password;
-  } catch (erro) {}
+    const user = await User.findOne({userName});
+    console.log(user);
+    if (!user) {
+      return res.json({status: 'nao existe esse usuario'});
+    }
+    const passwordCompare = await bcrypt.compare(password, user.password);
+    if (passwordCompare) {
+      const token = jwt.sign(
+        {
+          id: user._id,
+          userName: user.useName,
+        },
+        JWT_SECRET,
+        {
+          expiresIn: 86400,
+        },
+      );
+      return res.json({user, token: token});
+    } else {
+      return res.json({status: 'error'});
+    }
+  } catch (error) {}
 };

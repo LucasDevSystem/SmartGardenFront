@@ -4,7 +4,7 @@ const router = express.Router();
 //post routes
 router.post('/signup', AuthController.siginup);
 //get routes
-router.get('/sigin', AuthController.getUsers);
+router.post('/sigin', AuthController.sigin);
 
 router.get('/', (req, res) => {
   res.send('ola ');
