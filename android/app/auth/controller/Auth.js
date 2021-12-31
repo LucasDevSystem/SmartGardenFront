@@ -66,11 +66,11 @@ exports.sigin = async (req, res) => {
     const userName = req.body.userName;
     const password = req.body.password;
     const user = await User.findOne({userName});
-    console.log(user);
     if (!user) {
-      return res.json({status: 'nao existe esse usuario'});
+      return res.json({status: 'error', error: 'non-existent user'});
     }
     const passwordCompare = await bcrypt.compare(password, user.password);
+    console.log(passwordCompare);
     if (passwordCompare) {
       const token = jwt.sign(
         {
@@ -82,9 +82,9 @@ exports.sigin = async (req, res) => {
           expiresIn: 86400,
         },
       );
-      return res.json({user, token: token});
+      return res.json({status: 'loged', token: token});
     } else {
-      return res.json({status: 'error'});
+      return res.json({status: 'error', error: 'incorrect password'});
     }
   } catch (error) {}
 };
