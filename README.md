@@ -11,5 +11,7 @@ Passo a passo para rodar o app
    npm start 
    
    npm run android
+   
+E pronto!
   
    
