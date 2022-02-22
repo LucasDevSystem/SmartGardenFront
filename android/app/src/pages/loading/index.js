@@ -10,7 +10,14 @@ const GRADIENT_COLORS = ['#3ADDC2', '#00C9A7', '#02AB8E'];
 const ACTIVITY_COLOR = '#676E6E';
 
 const Loading = ({navigation}) => {
-  navigation.navigate('Main', {name: 'MainPage'});
+  React.useEffect(() => {
+    async function sleep2s() {
+      await sleep(2000);
+      navigation.navigate('Login', {name: 'Login'});
+    }
+    sleep2s();
+  });
+
   return (
     <View style={styles.container}>
       <LinearGradient colors={GRADIENT_COLORS} style={styles.gradient}>
@@ -22,3 +29,9 @@ const Loading = ({navigation}) => {
   );
 };
 export default Loading;
+
+function sleep(ms) {
+  return new Promise(resolve => {
+    setTimeout(resolve, ms);
+  });
+}

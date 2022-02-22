@@ -2,7 +2,6 @@ import * as React from 'react';
 import CardModel from './CardModel';
 import {View, ScrollView} from 'react-native';
 import styles from './styles';
-
 const GARDEN_LIST = [
   {
     label: 'Orquidea',
